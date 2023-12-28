@@ -1,11 +1,11 @@
-const express= require('express');
-const router= express.Router();
+const express = require('express');
+const router = express.Router();
 
-const handleCreateRole= require('../controller/roleController/createRole');
-const handleGetRole= require('../controller/roleController/returnRole');
+const handleCreateRole = require('../controller/roleController/createRole');
+const handleGetRole = require('../controller/roleController/returnRole');
 
 router.route('/')
-.post(handleCreateRole)
-.get(handleGetRole);
+    .post(handleCreateRole)
+    .get(handleGetRole);
 
-module.exports= router;
+module.exports = router;

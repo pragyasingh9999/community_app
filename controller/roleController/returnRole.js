@@ -1,13 +1,36 @@
-const pool= require('../../model/database.js');
+const pool = require('../../model/database.js');
 
-async function handleReturnRole(req,res){
+async function handleReturnRole(req, res) {
 
-    const [rows]= await pool.query(`
+
+    try {
+        const [rows] = await pool.query(`
         SELECT *
         FROM Role;
     `)
 
-    return res.send(rows);
+        const response = {
+            "status": true,
+            "content": {
+                "meta": {
+                    "total": rows.length
+                },
+                "data": rows
+            }
+        }
+        return res.status(200).send(response);
+
+    } catch (e) {
+        const response = {
+            "status": false,
+            "content": {
+                "data": {}
+            }
+        }
+        return res.status(200).send(response);
+    }
+
+
 }
 
-module.exports= handleReturnRole;
+module.exports = handleReturnRole;

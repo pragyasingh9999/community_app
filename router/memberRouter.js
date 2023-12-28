@@ -1,13 +1,13 @@
-const express= require('express');
-const router= express.Router();
+const express = require('express');
+const router = express.Router();
 
-const handleAddMember= require('../controller/memberController/addMember');
-const handleDeleteMember= require('../controller/memberController/deleteMember');
+const handleAddMember = require('../controller/memberController/addMember');
+const handleDeleteMember = require('../controller/memberController/deleteMember');
 
 router.route('/')
-.post(handleAddMember);
+    .post(handleAddMember);
 
 router.route('/:id')
-.delete(handleDeleteMember);
+    .delete(handleDeleteMember);
 
-module.exports= router;
+module.exports = router;
