@@ -16,8 +16,6 @@ async function handleGetMyOwnedCommunity(req, res) {
             "content": {
                 "meta": {
                     "total": rows.length,
-                    "pages": 1,
-                    "page": 1
                 },
                 "data": rows
             }
@@ -43,10 +41,18 @@ async function handleGetMyJoinedCommunity(req, res) {
 
     try {
         const [rows] = await pool.query(`
-    SELECT Community.*
+    SELECT  
+    Community.id,
+    Community.name,
+    Community.slug,
+    JSON_OBJECT('id', User.id, 'name', User.name) AS owner,
+    Community.created_at,
+    Community.updated_at
     FROM Community
+    JOIN
+    User ON Community.owner = User.id
     JOIN Member ON Community.id = Member.community
-    WHERE Member.user = ?;
+    WHERE Member.user = ?
     `, [user_id]);
 
         const response = {
@@ -54,8 +60,6 @@ async function handleGetMyJoinedCommunity(req, res) {
             "content": {
                 "meta": {
                     "total": rows.length,
-                    "pages": 1,
-                    "page": 1
                 },
                 "data": rows
             }

@@ -15,9 +15,18 @@ async function handleGetAllMembers(req, res) {
         const community_id = rows[0].id;
 
         const [result] = await pool.query(`
-        SELECT *
-        FROM Member
-        WHERE community=?
+        SELECT
+        Member.id,
+        Member.community,
+        JSON_OBJECT('id', User.id, 'name', User.name) AS user,
+        JSON_OBJECT('id', Role.id, 'name', Role.name) AS role,
+        Member.created_at
+        FROM
+        Member
+        JOIN
+        User ON Member.user = User.id
+        JOIN
+        Role ON Member.role = Role.id;
     `, [community_id]);
 
         const response = {
@@ -25,8 +34,6 @@ async function handleGetAllMembers(req, res) {
             "content": {
                 "meta": {
                     "total": result.length,
-                    "pages": 1,
-                    "page": 1
                 },
                 "data": result
             }

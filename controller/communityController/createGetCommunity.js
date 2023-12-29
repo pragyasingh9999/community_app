@@ -96,8 +96,17 @@ async function handleGetAllCommunity(req, res) {
   try {
 
     const [rows] = await pool.query(`
-    SELECT *
-    FROM Community;
+    SELECT
+    Community.id,
+    Community.name,
+    Community.slug,
+    JSON_OBJECT('id', User.id, 'name', User.name) AS owner,
+    Community.created_at,
+    Community.updated_at
+    FROM
+    Community
+    JOIN
+    User ON Community.owner = User.id;
    `)
 
     const response = {
@@ -105,8 +114,6 @@ async function handleGetAllCommunity(req, res) {
       "content": {
         "meta": {
           "total": rows.length,
-          "pages": 1,
-          "page": 1
         },
         "data": rows
       }

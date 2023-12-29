@@ -117,5 +117,9 @@ curl --location 'http://localhost:8000/v1/member' \
 }'
 ```
 
+### Delete Member
 
-
+```bash
+curl --location --request DELETE 'http://localhost:8000/v1/member/7146238272538469698' \
+--header 'Cookie: uid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2FtIiwiaWQiOiI3MTQ2MjMyMjY0MTM4ODUzMjQ0IiwiaWF0IjoxNzAzODIwNDY3fQ.sTGU7tK5KhkorV8HWcI923_GjmG4mWgLz3lODf6zKEo'
+```
